@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
 	srand(time(NULL));
 
 	output = malloc(25);
-	strcpy(output,"out.mp3");
+	strcpy(output,"out.ogg");
 	seed = rand();
 	tempo = 4;
 	alt = 1;
