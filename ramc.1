@@ -10,7 +10,7 @@ RAMC is a tool written in C for Linux (but should work on other UNIX systems) wh
 RAMC does not use any AI to generate its music, just randomness at its peak. Although it is extremely random, you do have the
 choice of selecting its random seed, tempo (notes/beats per second),whether it plays an intro and/or outro beat, how many times
 it plays an alternative beat in the middle of the song, if you just want to play the main beat once or twice, the main beat's
-length, and of course the destination/output file.
+length, the range of musical notes, and of course the destination/output file.
 
 .SH OPTIONS
 	-o "output file.ogg"    (Or .wav or whatever else is supported on your system)  (Default: out.ogg)
@@ -25,18 +25,24 @@ length, and of course the destination/output file.
 
 	-b 1                    (Outputs only the main beat and plays it 1 time)        (Default: 0)
 
-	-i 0                    0 = Don't play intro beat       1 = Play intro beat (default)
+	-i 0                    0 = Don't play intro beat       1 = Play intro beat     (Default: 1)
 
-	-e 0                    0 = Don't play outro beat       1 = Play outro beat (default)
+	-e 0                    0 = Don't play outro beat       1 = Play outro beat     (Default: 1)
+
+	-x 1                    (Sets lowest musical note to piano key 1)               (Default: 1)
+
+	-y 88                   (Sets highest musical note to piano key 88)             (Default: 1)
 
 .SH EXAMPLES
 	ramc -s 1234 -t 6 -o song1.wav          (Generate a song based on the random seed 1234 with a tempo of 6 notes a second and output to song1.wav)
-.br	
+
 	ramc -i 0 -e 0 -a 3                     (Generate a song without the intro or outro beat but play the alternative beat 3 times) (Playing the alternative beat more makes the song longer)
-.br
+
 	ramc -a 0                               (Generate a song without playing the alternative beat)                                  (Not playing the alternative beat makes the song shorter)
-.br
+
 	ramc -b 1 -l 8                          (Only output the main beat which is set to be 8 seconds long and played 1 time)
+
+	ramc -x 3 -y 56                         (Generates a song with musical notes ranging from piano key 3 to 56)
 
 .SH SEE ALSO
 SoX(1)

@@ -6,7 +6,7 @@
 #include <math.h>
 
 char *com, *output;
-unsigned int seed, tempo, bl1, bl2, bl3, *b1, *b2, *b3, br3, alt, b, l, intro, end;
+unsigned int seed, tempo, bl1, bl2, bl3, *b1, *b2, *b3, br3, alt, b, l, intro, end, x, y;
 
 void playbeat(int beat, int repeat){
 switch(beat){
@@ -14,7 +14,7 @@ case 1:
 	for(int r = 0; r < repeat; r++){
 	for(int i = 0; i < bl1; i++){
 		char arg[53];
-		sprintf(arg," synth %f sin %d fade 0 0 0.05 vol %f :",1.0f/tempo,b1[i],(1200.0f-b1[i])/1200);
+		sprintf(arg," synth %f sin %d fade 0 0 0.05 vol %f :",1.0f/tempo,b1[i],(4200.0f-b1[i])/4200);
 		strcat(com,arg);
 	}}
 break;
@@ -22,7 +22,7 @@ case 2:
 	for(int r = 0; r < repeat; r++){
 	for(int i = 0; i < bl2; i++){
 		char arg[53];
-		sprintf(arg," synth %f sin %d fade 0 0 0.05 vol %f :",1.0f/tempo,b2[i],(1200.0f-b2[i])/1200);
+		sprintf(arg," synth %f sin %d fade 0 0 0.05 vol %f :",1.0f/tempo,b2[i],(4200.0f-b2[i])/4200);
 		strcat(com,arg);
 	}}
 break;
@@ -30,7 +30,7 @@ case 3:
 	for(int r = 0; r < repeat; r++){
 	for(int i = 0; i < bl3; i++){
 		char arg[53];
-		sprintf(arg," synth %f sin %d fade 0 0 0.05 vol %f :",1.0f/tempo,b3[i],(1200.0f-b3[i])/1200);
+		sprintf(arg," synth %f sin %d fade 0 0 0.05 vol %f :",1.0f/tempo,b3[i],(4200.0f-b3[i])/4200);
 		strcat(com,arg);
 	}}
 break;
@@ -38,7 +38,8 @@ break;
 }
 
 int note(){
-	return 440*pow(2,((rand()%64+1)-49)/12);
+	int r = rand()%(y-x+1)+x;
+	return 440*pow(2,(r-49)/12);
 }
 
 int main(int argc, char *argv[]){
@@ -53,9 +54,11 @@ int main(int argc, char *argv[]){
 	l = 0;
 	intro = 1;
 	end = 1;
+	x = 1;
+	y = 64;
 
 	int c;
-	while((c = getopt(argc, argv, "o:l:s:t:a:b:i:e:")) != -1){
+	while((c = getopt(argc, argv, "o:l:s:t:a:b:i:e:x:y:")) != -1){
 	switch(c){
 	case 'o':
 		output = optarg;
@@ -81,8 +84,14 @@ int main(int argc, char *argv[]){
 	case 'e':
 		end = atoi(optarg);
 		break;
+	case 'x':
+		x = atoi(optarg);
+		break;
+	case 'y':
+		y = atoi(optarg);
+		break;
 	case '?':
-		printf("Known options are o,s,t,a,b,i,e. All options require an argument.\n");
+		printf("Known options are o,s,t,a,b,i,e,x,y. All options require an argument.\n");
 		return 1;
 	default:
 		abort();
